@@ -1,0 +1,7 @@
+download "SDL2-devel-2.30.0-mingw.zip"
+put directory in directory of code
+rename directory to SDL2
+"x86_64-w64-mingw32" rename to "SDL2"
+delete all directories and files (are useless)
+go to SDL2/SDL2/bin
+copy SDL2.dll and paste in directory of code
