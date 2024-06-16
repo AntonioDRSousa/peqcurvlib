@@ -2,13 +2,14 @@
 #define CURVES_H
 
 typedef struct Curve{
-	uint16_t * out;
-	uint16_t * in;
+	int16_t * out;
+	int16_t * in;
 	int size_out;
 	int size_in;
 }Curve;
 
 void fillCurve(Curve *, int , int ,int , int );
-Curve createCircle(uint16_t, uint16_t, uint16_t,double);
-Curve createEllipse(uint16_t, uint16_t, uint16_t, uint16_t, double);
+void moveCurve(Curve *, int, int);
+Curve createCircle(int16_t, int16_t, int16_t,double);
+Curve createEllipse(int16_t, int16_t, int16_t, int16_t, double);
 #endif

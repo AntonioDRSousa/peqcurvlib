@@ -59,16 +59,28 @@ void fillCurve(Curve * crv, int x, int y, int height, int width) {
     }
 	
 	flood_fill(mat,x,y,' ','o',&(crv->size_in));
-	crv->in = (uint16_t *) calloc(crv->size_in,sizeof(uint16_t));
+	crv->in = (int16_t *) calloc(crv->size_in,sizeof(int16_t));
 
 	for(i=0;i<height;i++){
 		for(j=0;j<width;j++){
 			if(mat[i][j]=='o'){
-				(crv->in)[k] = (uint16_t) i;
-				(crv->in)[k+1] = (uint16_t) j;
+				(crv->in)[k] = (int16_t) i;
+				(crv->in)[k+1] = (int16_t) j;
 				k+=2;
 			}
 		}
+	}
+}
+
+void moveCurve(Curve * crv, int dx, int dy){
+	register int i;
+	for(i=0;i<crv->size_out;i+=2){
+		(crv->out)[i]+=dx;
+		(crv->out)[i+1]+=dy;
+	}
+	for(i=0;i<crv->size_in;i+=2){
+		(crv->in)[i]+=dx;
+		(crv->in)[i+1]+=dy;
 	}
 }
 
@@ -77,7 +89,7 @@ Curve initCurve(double a, double b, double precision){
 	crv.in = NULL;
 	crv.size_out = (int) 2*ceil((b-a)/precision);
 	crv.size_in = 0;
-	crv.out = (uint16_t *) calloc(crv.size_out,sizeof(uint16_t));
+	crv.out = (int16_t *) calloc(crv.size_out,sizeof(int16_t));
 	return crv;
 }
 
@@ -85,7 +97,7 @@ Curve initCurve(double a, double b, double precision){
 	functions for create curves
 */
 
-Curve createEllipse(uint16_t a, uint16_t b, uint16_t rx, uint16_t ry, double precision) {
+Curve createEllipse(int16_t a, int16_t b, int16_t rx, int16_t ry, double precision) {
 	register double tmin = 0;
 	register double tmax = 2*PI;
 
@@ -100,6 +112,6 @@ Curve createEllipse(uint16_t a, uint16_t b, uint16_t rx, uint16_t ry, double pre
 	return crv;
 }
 
-Curve createCircle(uint16_t a, uint16_t b, uint16_t r, double precision) {
+Curve createCircle(int16_t a, int16_t b, int16_t r, double precision) {
 	return createEllipse(a, b, r, r, precision);
 }
